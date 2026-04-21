@@ -1,0 +1,32 @@
+# Segurança: Ignorar variáveis de ambiente e Chaves de API (EXTREMAMENTE IMPORTANTE)
+.env
+
+# Ambientes Virtuais 
+venv/
+.venv/
+env/
+ENV/
+
+# Python Cache (Arquivos gerados automaticamente pela biblioteca/sistema)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDEs e Editores
+.vscode/
+.idea/
+*.swp
+
+# Ignorar as saídas do processamento (CSVs e Gráficos Gerados)
+# Você pode comentar a linha abaixo se o professor quiser ver os resultados no repositório.
+data/output/*
+
+# Ponto de retenção (mantém a pasta data/output viva no Git, mesmo vazia)
+!data/output/.gitkeep
+
+# Dados estritamente privados (Testes originais dos estudantes)
+data/input/*
+!data/input/.gitkeep
+
+# Ignorar arquivos temporários de visualização de debug
+debug_layout.jpg

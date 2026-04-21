@@ -1,0 +1,40 @@
+{
+  "descricao": "Gabarito oficial - 1º Ano, Turma A, Bimestre 1",
+  "escola": "EM Nova Nazaré",
+  "municipio": "Nova Nazaré",
+  "ano": 2026,
+  "turma": "A",
+  "bimestre": 1,
+  "areas": {
+    "Português": [1, 2, 3, 4, 5, 6],
+    "Matemática": [7, 8, 9, 10, 11, 12],
+    "Ciências da Natureza": [13, 14, 15, 16, 17, 18],
+    "Ciências Humanas": [19, 20, 21, 22, 23, 24]
+  },
+  "respostas": {
+    "1": "B",
+    "2": "A",
+    "3": "A",
+    "4": "A",
+    "5": "A",
+    "6": "C",
+    "7": "C",
+    "8": "A",
+    "9": "C",
+    "10": "A",
+    "11": "C",
+    "12": "A",
+    "13": "D",
+    "14": "C",
+    "15": "A",
+    "16": "C",
+    "17": "D",
+    "18": "C",
+    "19": "B",
+    "20": "B",
+    "21": "A",
+    "22": "B",
+    "23": "C",
+    "24": "C"
+  }
+}

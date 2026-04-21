@@ -1,0 +1,10 @@
+pymupdf
+opencv-python
+pyzbar
+pytesseract
+pandas
+matplotlib
+numpy
+google-genai
+python-dotenv
+Pillow
