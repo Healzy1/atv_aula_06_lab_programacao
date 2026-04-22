@@ -29,6 +29,7 @@ def generate_reports(resultados_alunos, output_dir):
         linha = {
             "Nome": aluno.get("nome", "Desconhecido"),
             "Matricula": aluno.get("matricula", ""),
+            "Ano_Escolar": aluno.get("ano_escolar", ""),
             "Turma": aluno.get("turma", "")
         }
         

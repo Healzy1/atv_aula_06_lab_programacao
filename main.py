@@ -26,13 +26,15 @@ def process_pdf(pdf_path, gabarito_oficial):
         # 2. Extração OCR Cabeçalho
         cabecalho_bruto = extract_header_info(img)
         
-        # Usar dados 100% precisos do QR Code se disponível (ID|ANO|BIMESTRE|??|TURMA)
+        # Usar dados 100% precisos do QR Code se disponível (ID|ANO|BIMESTRE|ANO_ESCOLAR|TURMA)
         if qr_data and "|" in qr_data:
             partes = qr_data.split("|")
             matricula = partes[0]
             if len(partes) >= 3:
                 cabecalho_bruto["ano"] = partes[1]
                 cabecalho_bruto["bimestre"] = partes[2]
+            if len(partes) >= 4:
+                cabecalho_bruto["ano_escolar"] = partes[3]
             if len(partes) >= 5:
                 cabecalho_bruto["turma"] = partes[4]
                 
@@ -64,6 +66,7 @@ def process_pdf(pdf_path, gabarito_oficial):
             "municipio": cabecalho.get("municipio", ""),
             "escola": cabecalho.get("escola", ""),
             "ano": cabecalho.get("ano", ""),
+            "ano_escolar": cabecalho.get("ano_escolar", ""),
             "turma": cabecalho.get("turma", ""),
             "bimestre": cabecalho.get("bimestre", ""),
             "acertos_total": avaliacao["acertos_total"],
