@@ -20,11 +20,22 @@ def process_pdf(pdf_path, gabarito_oficial):
         print(f"  Analisando página {idx+1}")
         
         # 1. Extração QR Code
-        matricula = read_matricula(img)
+        qr_data = read_matricula(img)
+        matricula = qr_data
         
         # 2. Extração OCR Cabeçalho
         cabecalho_bruto = extract_header_info(img)
         
+        # Usar dados 100% precisos do QR Code se disponível (ID|ANO|BIMESTRE|??|TURMA)
+        if qr_data and "|" in qr_data:
+            partes = qr_data.split("|")
+            matricula = partes[0]
+            if len(partes) >= 3:
+                cabecalho_bruto["ano"] = partes[1]
+                cabecalho_bruto["bimestre"] = partes[2]
+            if len(partes) >= 5:
+                cabecalho_bruto["turma"] = partes[4]
+                
         # Super-Padronização de Caixa Alta (UPPERCASE) para TODOS os dados
         cabecalho = {}
         for k, v in cabecalho_bruto.items():

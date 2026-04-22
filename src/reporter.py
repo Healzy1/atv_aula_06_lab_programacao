@@ -73,20 +73,22 @@ def generate_reports(resultados_alunos, output_dir):
             
             # Melhor aluno geral
             if not df.empty and 'acertos_total' in df.columns:
-                idx_melhor_geral = df['acertos_total'].idxmax()
-                melhor_geral = df.loc[idx_melhor_geral]
-                file.write(f"-> MELHOR ALUNO GERAL:\n")
-                file.write(f"   Nome: {melhor_geral['nome']}\n")
-                file.write(f"   Acertos Totais: {melhor_geral['acertos_total']}\n\n")
+                max_total = df['acertos_total'].max()
+                melhores_gerais = df[df['acertos_total'] == max_total]['nome'].tolist()
+                nomes_gerais_str = ", ".join(melhores_gerais)
+                file.write(f"-> MELHOR(ES) ALUNO(S) GERAL(IS):\n")
+                file.write(f"   Nome(s): {nomes_gerais_str}\n")
+                file.write(f"   Acertos Totais: {max_total}\n\n")
             
             # Melhor aluno por área
             file.write("-> MELHORES ALUNOS POR ÁREA:\n")
             areas_cols = [col for col in df.columns if col.startswith('acertos_') and col not in ['acertos_total', 'acertos_area']]
             for col in areas_cols:
                 nome_area = col.replace("acertos_", "").replace("_", " ")
-                idx_melhor_area = df[col].idxmax()
-                melhor_aluno_area = df.loc[idx_melhor_area]
-                file.write(f"   - {nome_area}: {melhor_aluno_area['nome']} ({melhor_aluno_area[col]} acertos)\n")
+                max_acertos = df[col].max()
+                melhores_alunos = df[df[col] == max_acertos]['nome'].tolist()
+                nomes_str = ", ".join(melhores_alunos)
+                file.write(f"   - {nome_area}: {nomes_str} ({max_acertos} acertos)\n")
         
         print(f"Relatório de destaques salvo em: {destaques_path}")
         

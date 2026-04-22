@@ -58,6 +58,22 @@ O sistema conta com dois utilitários de nível raiz (ferramental de suporte) e 
 
 ---
 
+## 📚 Bibliotecas Utilizadas
+
+Para garantir que o processamento híbrido funcionasse com eficiência, as seguintes bibliotecas foram adotadas em nosso ecossistema:
+
+*   **`PyMuPDF` (`fitz`)**: Utilizada no `pdf_processor.py` para converter o PDF de entrada diretamente em imagens de alta qualidade (DPI fixo). Foi escolhida pois não exige a instalação de pacotes C++ pesados no Windows (como o Poppler).
+*   **`opencv-python` (`cv2`)**: O motor de visão computacional. Usado em peso no `omr_processor.py` para aplicar filtros matemáticos (Gaussian Blur, Otsu thresholding) e checar os pixels pretos das bolhas marcadas. Também apoia o `ocr_reader.py` com as ROIs (Regiões de Interesse).
+*   **`pyzbar`**: Empregada no `qr_reader.py` por ser leve e direta ao ponto para decodificação de QR Codes na imagem, garantindo a extração 100% fiel da matrícula.
+*   **`pytesseract`**: Motor de OCR offline primário (`ocr_reader.py`). Responsável por ler textos e números do cabeçalho de forma rápida sem depender de internet.
+*   **`pandas`**: Usado pelo `reporter.py` para organizar os resultados processados em DataFrames, permitindo estruturação limpa, cálculos de médias (como buscar a nota máxima usando `.max()`) e exportação final em CSV.
+*   **`matplotlib`**: Biblioteca de visualização de dados adotada no `reporter.py` para a construção e salvamento de todos os gráficos (barras, empilhados) que constroem o perfil da turma e dos alunos.
+*   **`google-genai`**: O SDK oficial do Google utilizado no `multimodal_reader.py` para realizar as requisições à API do modelo Gemini. Atua como nosso "resgate cognitivo" (fallback) para manuscritos ilegíveis ou falhas de alinhamento.
+*   **`python-dotenv`**: Gerencia de forma segura as variáveis de ambiente (como a `GEMINI_API_KEY`) sem deixar chaves confidenciais expostas no código fonte.
+*   **`numpy`** e **`Pillow`**: Bibliotecas base usadas internamente e em cálculos de matrizes de pixels com o OpenCV.
+
+---
+
 ## 🛠️ Como Executar
 
 **1. Instalação de Dependências de Pacote**
