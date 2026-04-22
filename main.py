@@ -67,7 +67,8 @@ def process_pdf(pdf_path, gabarito_oficial):
             "turma": cabecalho.get("turma", ""),
             "bimestre": cabecalho.get("bimestre", ""),
             "acertos_total": avaliacao["acertos_total"],
-            "acertos_area": avaliacao["acertos_area"] # Para o repórter
+            "acertos_area": avaliacao["acertos_area"], # Para o repórter
+            "detalhes": avaliacao.get("detalhes", {}) # Para o relatório detalhado
         }
         
         # Opend para transformar áreas em colunas diretas no CSV final

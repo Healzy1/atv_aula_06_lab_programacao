@@ -23,6 +23,35 @@ def generate_reports(resultados_alunos, output_dir):
     df.to_csv(csv_path, index=False, encoding='utf-8')
     print(f"Relatório CSV gerado em: {csv_path}")
     
+    # 1.5 Salvar CSV Detalhado (Horizontal) das respostas
+    linhas_detalhadas = []
+    for aluno in resultados_alunos:
+        linha = {
+            "Nome": aluno.get("nome", "Desconhecido"),
+            "Matricula": aluno.get("matricula", ""),
+            "Turma": aluno.get("turma", "")
+        }
+        
+        detalhes = aluno.get("detalhes", {})
+        
+        # Garantir ordem numérica das questões (1 a 24)
+        questoes_ordenadas = sorted(detalhes.keys(), key=lambda x: int(x) if x.isdigit() else 999)
+        
+        for q_str in questoes_ordenadas:
+            info = detalhes[q_str]
+            linha[f"Q{q_str}_Resposta"] = info.get("marcada", "")
+            linha[f"Q{q_str}_Gabarito"] = info.get("correta", "")
+            linha[f"Q{q_str}_Status"] = "Correto" if info.get("acertou") else "Errado"
+            
+        linhas_detalhadas.append(linha)
+            
+    if linhas_detalhadas:
+        df_detalhado = pd.DataFrame(linhas_detalhadas)
+        
+        csv_detalhado_path = os.path.join(output_dir, "relatorio_respostas_detalhado.csv")
+        df_detalhado.to_csv(csv_detalhado_path, index=False, encoding='utf-8-sig')
+        print(f"Relatório detalhado de respostas gerado em: {csv_detalhado_path}")
+    
     # Expandir colunas de acerto por área caso não estejam flat no df
     # Assume-se que 'acertos_area' é um dict dentro da list de dicts original.
     # Vamos criar um DataFrame só das áreas para facilitar o plot.
@@ -60,6 +89,8 @@ def generate_reports(resultados_alunos, output_dir):
         plt.ylabel('Pontuação Total')
         plt.xlabel('Aluno')
         plt.xticks(rotation=45, ha='right')
+        plt.ylim(0, 24) # Máximo fixo de 24 questões
+        plt.yticks(range(0, 25, 1)) # Numeração lateral de 1 em 1
         plt.tight_layout()
         grafico_totais_path = os.path.join(output_dir, "grafico_total_por_aluno.png")
         plt.savefig(grafico_totais_path)
@@ -107,6 +138,8 @@ def generate_reports(resultados_alunos, output_dir):
             plt.ylabel('Acertos Totais / Acumulados')
             plt.xlabel('Aluno')
             plt.xticks(rotation=45, ha='right')
+            plt.ylim(0, 24) # Máximo fixo de 24 questões
+            plt.yticks(range(0, 25, 1)) # Numeração lateral de 1 em 1
             
             # Adiciona os totais acima da barra
             for i, total in enumerate(df['acertos_total']):
@@ -150,7 +183,7 @@ def generate_reports(resultados_alunos, output_dir):
             plt.barh(areas, valores, color=['#4dc9f6', '#f67019', '#f53794', '#537bc4'])
             plt.title(f'Desempenho de: {nome_aluno}')
             plt.xlabel('Acertos')
-            plt.xlim(0, max(max(valores) + 1, 6)) # Max 6 acertos por área no gabarito
+            plt.xlim(0, 6) # Máximo fixo de 6 acertos por área
             plt.tight_layout()
             
             ind_path = os.path.join(pasta_individuais, f"desempenho_{nome_arquivo}.png")

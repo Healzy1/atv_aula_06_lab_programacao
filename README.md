@@ -50,8 +50,9 @@ O sistema conta com dois utilitários de nível raiz (ferramental de suporte) e 
     Cruza as respostas retornadas do módulo OMR/IA contra a estrutura real contida em `gabarito_oficial.json`, agrupando acertos e perdas de acordo com a área do conhecimento solicitada (Ex: Português 1-6, Matemática 7-12).
     
 *   **`src/reporter.py`**
-    Recebe as consolidações JSON e empacota toda a análise usando `pandas` e `matplotlib`, finalizando com o despejo no diretório `data/output/` em 4 frentes:
+    Recebe as consolidações JSON e empacota toda a análise usando `pandas` e `matplotlib`, finalizando com o despejo no diretório `data/output/` em 5 frentes:
     - `relatorio_notas.csv`: Base de dados tabulada final com chaves limpas em caixa-alta.
+    - `relatorio_respostas_detalhado.csv`: Exportação detalhada contendo a resposta individual do aluno questão por questão e seu comparativo com o gabarito.
     - `destaques_turma.txt`: Avaliação lógica de alunos com as melhores performances.
     - Gráficos Analíticos Gerais da Turma (Formato normal e Barras empilhadas).
     - `graficos_individuais/`: Pasta de geração de gráficos curtos focados unicamente no usuário aluno.
